@@ -1,7 +1,7 @@
 CREATE DOMAIN NAME AS TEXT
 	NOT NULL;
 
-CREATE TABLE SUPPLIERS
+CREATE TABLE SUPLIERS
 (
 	SN SERIAL NOT NULL PRIMARY KEY,
 	SNAME NAME NOT NULL,
@@ -28,14 +28,14 @@ CREATE TABLE PROJECTS
 
 CREATE TABLE SALES
 (
-	SN INTEGER NOT NULL REFERENCES SUPPLIERS (SN) ON DELETE CASCADE,
+	SN INTEGER NOT NULL REFERENCES SUPLIERS (SN) ON DELETE CASCADE,
 	PN INTEGER NOT NULL REFERENCES PARTS (PN) ON DELETE CASCADE,
 	JN INTEGER NOT NULL REFERENCES PROJECTS (JN) ON DELETE CASCADE,
 	QTY INTEGER NOT NULL,
 	PRIMARY KEY (SN, PN, JN)
 );
 
-INSERT INTO SUPPLIERS (SN, SNAME, STATUS, CITY) VALUES ('1', 'Иванов', '20', 'Москва'), ('2', 'Алексеев', '10', 'С.Петербург'), ('3', 'Кузнецов', '30', 'Новосибирск'), ('4', 'Чернов', '20', 'Москва'), ('5', 'Петров', '30', 'Новосибирск');
+INSERT INTO SUPLIERS (SN, SNAME, STATUS, CITY) VALUES ('1', 'Иванов', '20', 'Москва'), ('2', 'Алексеев', '10', 'С.Петербург'), ('3', 'Кузнецов', '30', 'Новосибирск'), ('4', 'Чернов', '20', 'Москва'), ('5', 'Петров', '30', 'Новосибирск');
 
 INSERT INTO PARTS (PN, PNAME, COLOR, WEIGHT, CITY) VALUES ('1', 'Гайка', 'Красный', '12', 'Москва'), ('2', 'Болт', 'Зеленый', '17', 'С.Петербург'), ('3', 'Шайба', 'Синий', '17', 'Екатеринбург'), ('4', 'Шайба', 'Красный', '14', 'Москва'), ('5', 'Камера', 'Синий', '12', 'С.Петербург'), ('6', 'Прокладка', 'Красный', '19', 'Москва');
 
