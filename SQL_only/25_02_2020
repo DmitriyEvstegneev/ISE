@@ -1,0 +1,53 @@
+---------------------------------25.02, ДОМАШНЯЯ РАБОТА---------------------------------
+
+1) Написать реляционное выражение, получающее пары имен красных деталей.
+
+// Понял как: “получить все возможные сочетания имён красных деталей”
+
+WITH parts_1 AS (SELECT pn, pname AS name_1 FROM parts WHERE color = 'Красный'),
+	parts_2 AS (SELECT pn, pname AS name_2 FROM parts WHERE color = 'Красный')
+	SELECT name_1, name_2 FROM parts_1, parts_2 WHERE parts_1.pn <= parts_2.pn;
+
+2) Написать реляционное выражение, получающее статусы поставщиков не московских деталей.
+
+SELECT DISTINCT suppliers.sn, suppliers.status FROM sales
+	JOIN suppliers ON sales.sn = suppliers.sn
+	JOIN parts ON parts.pn = sales.pn
+	WHERE parts.city <> 'Москва';
+
+
+-------------------------------25.02, САМОСТОЯТЕЛЬНАЯ РАБОТА-----------------------------
+----------------------------------------ВАРИАНТ 1----------------------------------------
+
+1) Написать реляционное выражение, получающее имена поставщиков красных деталей
+
+SELECT DISTINCT suppliers.sname FROM sales
+	JOIN suppliers ON sales.sn = suppliers.sn
+	JOIN parts ON parts.pn = sales.pn
+	WHERE parts.color = 'Красный';
+
+2) Написать реляционное выражение, получающее номера проектов, не использующих детали, тяжелее 14
+
+SELECT jn FROM projects
+EXCEPT
+SELECT DISTINCT sales.jn FROM sales
+	JOIN parts ON sales.pn = parts.pn WHERE weight > 14;
+
+----------------------------------------ВАРИАНТ 2----------------------------------------
+
+1) Написать реляционное выражение, получающее имена проектов с поставщиками из Москвы
+
+SELECT projects.jname FROM sales
+	JOIN projects ON sales.jn = projects.jn
+	JOIN suppliers ON sales.sn = suppliers.sn
+	WHERE suppliers.city = 'Москва';
+
+2) Написать реляционное выражение, получающее имена деталей не поставляющихся в Челябинские проекты
+
+SELECT pn, pname FROM parts
+EXCEPT
+SELECT parts.pn, parts.pname FROM sales
+	JOIN parts ON sales.pn = parts.pn
+	JOIN projects ON sales.jn = projects.jn
+	WHERE projects.city = 'Челябинск';
+
